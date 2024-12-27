@@ -3,12 +3,14 @@
     public class OtusDictionary
     {
         DictionaryItem[]? items;
-        
-        
+
+        public OtusDictionary()
+        {
+            Initialize(32);
+        }
         public void Add(int key, string value)
         {
-            if (items == null) Initialize(32);
-            if (string.IsNullOrEmpty(value))
+            if (value == null)
             {
                 throw new ArgumentNullException(nameof(value));
             }
@@ -32,7 +34,7 @@
 
         private void Resize()
         {
-            var newItems = new DictionaryItem[items.Length*2];
+            var newItems = new DictionaryItem[items.Length * 2];
             foreach (var item in items)
             {
                 if (!item.IsOccupied) continue;
@@ -49,7 +51,7 @@
 
         private int getIndex(int key, int arrayLenght)
         {
-           return Math.Abs(key % arrayLenght);
+            return Math.Abs(key % arrayLenght);
         }
 
         private void Initialize(int capacity)
@@ -59,7 +61,7 @@
                 capacity = 32;
             }
             items = new DictionaryItem[capacity];
-            
+
         }
         public string this[int key]
         {
@@ -77,7 +79,7 @@
             var index = getIndex((int)key, items.Length);
             if (!items[index].IsOccupied || items[index].Key != key)
                 return null;
-            
+
             return items[index].Value;
         }
 
